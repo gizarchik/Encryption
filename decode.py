@@ -16,17 +16,17 @@ def decode_vigener(key, input_file, output_file):
         for letter in lines:
             index %= key_length
             if letter.islower():
-                output_file.write(lowercase_letters[(lowercase_letters.find(letter) -
-                                                      lowercase_letters.find(key[index]))
-                                                     % letter_length])
+                letter_number = (lowercase_letters.find(letter) + lowercase_letters.find(key[index])) % letter_length
+                output_file.write(lowercase_letters[letter_number])
                 index += 1
             elif letter.isupper():
-                output_file.write(uppercase_letters[(uppercase_letters.find(letter) -
-                                                      lowercase_letters.find(key[index]))
-                                                     % letter_length])
+                letter_number = (uppercase_letters.find(letter) + lowercase_letters.find(key[index])) % letter_length
+                output_file.write(uppercase_letters[letter_number])
                 index += 1
-            else:
+            elif string.printable.find(letter) != -1:
                 output_file.write(letter)
+            else:
+                raise UnicodeError('Have non-ascii letters')
 
 
 def decode_vernam(key, input_file, output_file):

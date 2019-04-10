@@ -22,7 +22,10 @@ def main():
 
         if arguments['cipher'] == 'caesar':
             try:
-                key = int(arguments['key'])
+                if arguments['key'] is None:
+                    key = 0
+                else:
+                    key = int(arguments['key'])
             except Exception:
                 input_file.close()
                 output_file.close()
@@ -38,8 +41,11 @@ def main():
                     decode.decode_caesar(key, input_file, output_file)
         elif arguments['cipher'] == 'vigenere':
             try:
-                key = arguments['key']
-                key = key.lower()
+                if arguments['key'] is None:
+                    key = 'hello'
+                else:
+                    key = arguments['key']
+                    key = key.lower()
             except Exception:
                 input_file.close()
                 output_file.close()
@@ -101,6 +107,8 @@ def main():
                 hack.hack_caesar(analysis_file, input_file, output_file, arguments['input_file'])
             except Exception:
                 raise Exception
+        input_file.close()
+        output_file.close()
 
 
 if __name__ == '__main__':
